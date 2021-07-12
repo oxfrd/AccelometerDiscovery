@@ -34,6 +34,11 @@
 #define MAG_CS_PORT MAG_CS_GPIO_Port
 #define MAG_CS_PIN MAG_CS_Pin
 
+#define ACCEL_ALL 1100
+#define ACCEL_X 1101
+#define ACCEL_Y 1102
+#define ACCEL_Z 1103
+
 /*****************************************************************************************/
 /* 									Variables                                            */
 /*****************************************************************************************/
@@ -66,7 +71,6 @@ void transfer_data(uint8_t *tx_buffer, uint16_t length);
 int32_t lsm303ctr_AccelerationRead(void);
 int32_t lsm303ctr_MagneticRead(void);
 int32_t lsm303ctr_TemperatureRead(void);
-
-
+int32_t lsm303ctr_sendAccel(int instruction, float *acceleration);
 
 #endif /* INC_LSM303CTR_ADD_H_ */

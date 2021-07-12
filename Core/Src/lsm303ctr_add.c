@@ -11,8 +11,6 @@ void error_shouter(int32_t* error_check, char text[40])
 {
 	if (error_check == 0)	return;
 
-	waiterForEOFTx();
-
 	uint16_t size;
 	size = sprintf((char*) tx_buffer, "!!!  %s error.  !!! \r\n", text);
 	transfer_data(tx_buffer, size);
@@ -136,10 +134,35 @@ int32_t lsm303ctr_AccelerationRead(void) {
 		acceleration_mg[2] = (float) 2
 				* lsm303ctr_from_fs_2g_hr_to_mg(data_raw_acceleration[2]);
 
-		waiterForEOFTx();
+		lsm303ctr_sendAccel(ACCEL_X, acceleration_mg);
+		lsm303ctr_sendAccel(ACCEL_ALL, acceleration_mg);
+	}
+	return 0;
+}
 
-		sprintf((char *) tx_buffer, "Acceleration [mg]:%4.2f \t%4.2f\t%4.2f \r\n",
-				acceleration_mg[0], acceleration_mg[1], acceleration_mg[2]);
+int32_t lsm303ctr_sendAccel(int instruction, float *acceleration) {
+
+	if (instruction == ACCEL_ALL) // send values for all in [mg]
+	{
+		sprintf((char *) tx_buffer, "%4.2f \t%4.2f\t%4.2f \r\n", acceleration[0],
+				acceleration[1], acceleration[2]);
+		transfer_data(tx_buffer, strlen((char const *) tx_buffer));
+
+	} else if (instruction == ACCEL_X) //send values for X axis [mg]
+	{
+		sprintf((char *) tx_buffer, "%4.2f \r\n", acceleration[0]);
+		transfer_data(tx_buffer, strlen((char const *) tx_buffer));
+	} else if (instruction == ACCEL_Y)
+		//send values for Y axis [mg]
+
+	{
+		sprintf((char *) tx_buffer, "%4.2f \r\n", acceleration[1]);
+		transfer_data(tx_buffer, strlen((char const *) tx_buffer));
+	} else if (instruction == ACCEL_Z)
+		//send values for Z axis [mg]
+
+	{
+		sprintf((char *) tx_buffer, "%4.2f \r\n", acceleration[2]);
 		transfer_data(tx_buffer, strlen((char const *) tx_buffer));
 	}
 	return 0;
@@ -156,8 +179,6 @@ int32_t lsm303ctr_MagneticRead(void) {
 		magnetic_mG[0] = lsm303ctr_from_lsb_to_mgauss(data_raw_magnetic[0]);
 		magnetic_mG[1] = lsm303ctr_from_lsb_to_mgauss(data_raw_magnetic[1]);
 		magnetic_mG[2] = lsm303ctr_from_lsb_to_mgauss(data_raw_magnetic[2]);
-
-		waiterForEOFTx();
 
 		sprintf((char *) tx_buffer,
 				"Magnetic field [mG]:%4.2f\t%4.2f\t%4.2f \r\n", magnetic_mG[0],
@@ -179,8 +200,6 @@ int32_t lsm303ctr_TemperatureRead(void) {
 		temperature_degC = lsm303ctr_from_lsb_hr_to_celsius(
 				data_raw_temperature);
 
-		waiterForEOFTx();
-
 		sprintf((char *) tx_buffer, "Temperature [degC]:%6.2f\r\n",
 				temperature_degC);
 		transfer_data(tx_buffer, strlen((char const *) tx_buffer));
@@ -197,6 +216,7 @@ int32_t lsm303ctr_TemperatureRead(void) {
  */
 
 void transfer_data(uint8_t *tx_buffer, uint16_t length) {
-
+	waiterForEOFTx();
 	HAL_UART_Transmit_DMA(&UART_BUS, tx_buffer, length);
+
 }
