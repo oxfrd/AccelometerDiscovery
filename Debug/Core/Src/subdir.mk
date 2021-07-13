@@ -48,7 +48,7 @@ Core/Src/%.o: ../Core/Src/%.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: MCU GCC Compiler'
 	@echo $(PWD)
-	arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32L476xx -I"C:/STM32_projects/AccelometerDiscovery/Core/Inc" -I"C:/STM32_projects/AccelometerDiscovery/Drivers/STM32L4xx_HAL_Driver/Inc" -I"C:/STM32_projects/AccelometerDiscovery/Drivers/STM32L4xx_HAL_Driver/Inc/Legacy" -I"C:/STM32_projects/AccelometerDiscovery/Drivers/CMSIS/Device/ST/STM32L4xx/Include" -I"C:/STM32_projects/AccelometerDiscovery/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" -o "$@" "$<"
+	arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32L476xx -I"C:/Users/oxford/Documents/STM32_projects/Accelerometer_LSM303CTR/Core/Inc" -I"C:/Users/oxford/Documents/STM32_projects/Accelerometer_LSM303CTR/Drivers/STM32L4xx_HAL_Driver/Inc" -I"C:/Users/oxford/Documents/STM32_projects/Accelerometer_LSM303CTR/Drivers/STM32L4xx_HAL_Driver/Inc/Legacy" -I"C:/Users/oxford/Documents/STM32_projects/Accelerometer_LSM303CTR/Drivers/CMSIS/Device/ST/STM32L4xx/Include" -I"C:/Users/oxford/Documents/STM32_projects/Accelerometer_LSM303CTR/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

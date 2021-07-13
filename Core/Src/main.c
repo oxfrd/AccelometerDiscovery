@@ -27,6 +27,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "lsm303ctr_add.h"
+#include <stdlib.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -47,7 +48,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint8_t UART_RxBuffer[UART_BufforSize];
+char UART_RxBuffer[UART_BufforSize];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -67,11 +68,15 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 	HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, GPIO_PIN_SET);
 }
 
-/*void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-	lsm303ctr_sendAccel(UART_RxBuffer, acceleration_mg);
+	uint32_t instruction;
+	instruction = atoi(UART_RxBuffer);
+	transfer_data((uint8_t *) UART_RxBuffer, UART_BufforSize);
+	lsm303ctr_sendAccel(instruction, acceleration_mg);
+	HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, GPIO_PIN_SET);
 }
-*/
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -112,7 +117,7 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 flag_UART_DMA_TxCompleted = 1;
-HAL_UART_Receive_DMA(&huart2, UART_RxBuffer , UART_BufforSize);
+HAL_UART_Receive_DMA(&huart2, (uint8_t *) UART_RxBuffer , UART_BufforSize);
 lsm303ctr_init();
   /* USER CODE END 2 */
 

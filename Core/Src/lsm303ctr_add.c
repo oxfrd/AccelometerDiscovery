@@ -134,7 +134,7 @@ int32_t lsm303ctr_AccelerationRead(void) {
 		acceleration_mg[2] = (float) 2
 				* lsm303ctr_from_fs_2g_hr_to_mg(data_raw_acceleration[2]);
 
-		lsm303ctr_sendAccel(ACCEL_ALL, acceleration_mg);
+	//	lsm303ctr_sendAccel(ACCEL_ALL, acceleration_mg);
 	}
 	return 0;
 }
