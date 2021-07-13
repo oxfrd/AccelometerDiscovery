@@ -71,6 +71,6 @@ void transfer_data(uint8_t *tx_buffer, uint16_t length);
 int32_t lsm303ctr_AccelerationRead(void);
 int32_t lsm303ctr_MagneticRead(void);
 int32_t lsm303ctr_TemperatureRead(void);
-int32_t lsm303ctr_sendAccel(int instruction, float *acceleration);
+int32_t lsm303ctr_sendAccel(uint32_t instruction, float *acceleration);
 
 #endif /* INC_LSM303CTR_ADD_H_ */

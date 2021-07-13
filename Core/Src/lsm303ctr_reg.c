@@ -3139,7 +3139,6 @@ int32_t lsm303ctr_xl_fifo_empty_flag_get(stmdev_ctx_t *ctx,
   return ret;
 }
 /*
-/**
   * @}
   *
   */

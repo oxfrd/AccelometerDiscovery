@@ -66,6 +66,12 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 	flag_UART_DMA_TxCompleted = 1;
 	HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, GPIO_PIN_SET);
 }
+
+/*void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+	lsm303ctr_sendAccel(UART_RxBuffer, acceleration_mg);
+}
+*/
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -116,8 +122,6 @@ lsm303ctr_init();
   {
 	  HAL_Delay(30);
 lsm303ctr_AccelerationRead();
-//lsm303ctr_MagneticRead();
-//lsm303ctr_TemperatureRead();
 
   /* USER CODE END WHILE */
 

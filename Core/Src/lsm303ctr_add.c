@@ -134,13 +134,12 @@ int32_t lsm303ctr_AccelerationRead(void) {
 		acceleration_mg[2] = (float) 2
 				* lsm303ctr_from_fs_2g_hr_to_mg(data_raw_acceleration[2]);
 
-		lsm303ctr_sendAccel(ACCEL_X, acceleration_mg);
 		lsm303ctr_sendAccel(ACCEL_ALL, acceleration_mg);
 	}
 	return 0;
 }
 
-int32_t lsm303ctr_sendAccel(int instruction, float *acceleration) {
+int32_t lsm303ctr_sendAccel(uint32_t instruction, float *acceleration) {
 
 	if (instruction == ACCEL_ALL) // send values for all in [mg]
 	{
@@ -164,7 +163,12 @@ int32_t lsm303ctr_sendAccel(int instruction, float *acceleration) {
 	{
 		sprintf((char *) tx_buffer, "%4.2f \r\n", acceleration[2]);
 		transfer_data(tx_buffer, strlen((char const *) tx_buffer));
+	} else
+	{
+		sprintf((char *) tx_buffer, "Pass correct argument \r\n");
+				transfer_data(tx_buffer, strlen((char const *) tx_buffer));
 	}
+
 	return 0;
 }
 
@@ -218,5 +222,4 @@ int32_t lsm303ctr_TemperatureRead(void) {
 void transfer_data(uint8_t *tx_buffer, uint16_t length) {
 	waiterForEOFTx();
 	HAL_UART_Transmit_DMA(&UART_BUS, tx_buffer, length);
-
 }
