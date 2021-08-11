@@ -27,6 +27,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "lsm303ctr_add.h"
+#include "uart_add.h"
 #include <stdlib.h>
 /* USER CODE END Includes */
 
